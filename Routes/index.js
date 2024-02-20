@@ -1,10 +1,10 @@
-const express = require('express');
-const router = express();
-const usuarios = require('./usuarios.route');
-const pacientes = require('./pacientes.route');
+import {Router} from "express";
+import usuarios from './usuarios.route.js';
+import pacientes from './pacientes.route.js';
+
+const router = Router();
 
 router.use('/usuarios',usuarios);
 router.use('/pacientes',pacientes);
 
-
-module.exports = router; 
+export default router; 

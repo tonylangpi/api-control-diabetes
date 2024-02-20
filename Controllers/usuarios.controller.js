@@ -1,9 +1,10 @@
-const { sequelize } = require("../Database/bd");
-const bcrypt = require('bcryptjs');
-
+import {sequelize} from '../Database/bd.js'
+import bcrypt from "bcryptjs";
+import {Usuario} from '../Modelos/usuarios.modelo.js'
+const usuario  = new Usuario();
 const getUsers = async(req, res) => {
     try {
-        const result = await sequelize.query('SELECT * FROM usuarios');
+        const result = await usuario.getUsuarios();
          res.json(result[0]);
     } catch (error) {
         console.log(error);
@@ -11,25 +12,19 @@ const getUsers = async(req, res) => {
 };
 
 const createUsers = async(req, res) => {
-    const {Nombres, apellidos, Correo, Contrasena, Rol} = req.body;
+    const data = req.body;
     const emailregex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     try{
-        if(!Nombres.trim() || !apellidos.trim() || !Correo.trim() || !Contrasena.trim() || !Rol.length == 0){
+        if(!data.Nombres.trim() || !data.apellidos.trim() || !data.Correo.trim() || !data.Contrasena.trim() || !data.Rol.length == 0){
            return  res.json({message: 'Todos los campos son obligatorios'});
-        } else if(!emailregex.test(Correo)){
+        } else if(!emailregex.test(data.Correo)){
             return res.json({message: 'El correo no es valido'});
         }
-        const userFound = await sequelize.query('SELECT * FROM usuarios WHERE Correo = ?', {
-            type: sequelize.QueryTypes.SELECT,
-            replacements: [Correo]
-        });
+        const userFound = await usuario.userFound(data.Correo);
         if(userFound.length > 0){
             return res.json({message: 'El correo ya existe'});
         }else {
-              let passwordHash = await bcrypt.hash(Contrasena, 10);
-            const result = await sequelize.query('INSERT INTO usuarios (Nombres, apellidos, Correo, Contrasena, Rol, Estado) VALUES (?, ?, ?, ?, ?, ?)', {
-                replacements: [Nombres, apellidos, Correo, passwordHash, Rol, "ACTIVO"]
-            });
+            const result = await usuario.createUsuario(data);
             res.json({message: 'Usuario creado correctamente'});
         }
         
@@ -38,7 +33,7 @@ const createUsers = async(req, res) => {
     }
 }
 
-module.exports ={
+export {
     getUsers,
     createUsers
 }

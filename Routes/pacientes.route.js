@@ -1,10 +1,14 @@
-const express = require('express');
-const router = express();
-const {getPacientes,createPacientes} = require('../Controllers/pacientes.controller');
+import { Router } from 'express';
+import {getPacientes,createPacientes, PacienteById, updatePaciente,changeStatusPacientes} from '../Controllers/pacientes.controller.js';
+const router = Router();
 
 //rutas de CRUD sobre tabla PACIENTES EN BD EN LA NUBE
 router.get('/all',getPacientes);
 router.post('/create',createPacientes);
-module.exports = router;
+router.get('/pacienteById/:Id_Paciente',PacienteById);
+router.post('/update/:Id_Paciente',updatePaciente);
+router.put('/changeStatusPaciente/:Id_Paciente',changeStatusPacientes);
+
+export default router;
 
 
