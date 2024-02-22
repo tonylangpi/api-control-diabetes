@@ -16,7 +16,7 @@ export class Usuario {
 
     async createUsuario(data){
         const passwordHash = await bcrypt.hash(data.Contrasena, 10);
-        const result = await sequelize.query('INSERT INTO usuarios (Nombres, apellidos, Correo, Contrasena, Rol, Estado) VALUES (?, ?, ?, ?, ?, ?)', {
+        const result = await sequelize.query('INSERT INTO Usuarios (Nombres, Apellidos, Correo, Contrasena, Rol, Estado) VALUES (?, ?, ?, ?, ?, ?)', {
             replacements: [data.Nombres, data.apellidos, data.Correo, passwordHash, data.Rol, "ACTIVO"]
         });
         return result
