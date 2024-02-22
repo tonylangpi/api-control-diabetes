@@ -102,10 +102,30 @@ const changeStatusPacientes = async (req, res) => {
         res.status(500).json({ message: 'Error interno del servidor' });
     }
 }
+
+const authAppPaciente = async (req, res) => {
+    const {Correo, DPI} = req.body;
+    const regexDpi = /^[0-9]{13}$/;
+    const emailregex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    try { 
+        if(!emailregex.test(Correo) || !regexDpi.test(DPI)){
+            res.json({ message: 'EL DPI NO ES VALIDO', status: "error"});
+        }else{
+            const result = await paciente.autenticacionAppPaciente(DPI, Correo);
+            res.json({data: result[0], status: "ok"});
+        }
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+}
+
 export {
     getPacientes,
     createPacientes,
     PacienteById,
     updatePaciente,
-    changeStatusPacientes
+    changeStatusPacientes,
+    authAppPaciente
 }

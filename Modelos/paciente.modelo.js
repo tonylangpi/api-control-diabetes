@@ -86,4 +86,13 @@ export class Paciente {
         }
        
     }
+    async autenticacionAppPaciente(DPI,Correo){
+        const result = await this.sequelize.query('SELECT * FROM Pacientes WHERE DPI = ? AND Correo = ? AND Estado = ?',
+                {
+                    replacements: 
+                    [DPI, Correo, "ACTIVO"]
+                }
+            );
+        return result
+    }
 }
