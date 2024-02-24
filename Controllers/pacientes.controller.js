@@ -112,7 +112,11 @@ const authAppPaciente = async (req, res) => {
             res.json({ message: 'EL DPI NO ES VALIDO', status: "error"});
         }else{
             const result = await paciente.autenticacionAppPaciente(DPI, Correo);
-            res.json({data: result[0], status: "ok"});
+            if(result[0].length === 0){
+                res.json({ message: 'Credenciales incorrectas', status: "error"});
+            }else{
+                  res.json({data: result[0], status: "ok"});
+            }
         }
         
     } catch (error) {
