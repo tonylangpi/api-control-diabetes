@@ -24,7 +24,21 @@ const createRecetaFicha= async(req, res) => {
     }
 };
 
+const deleteRecetaByFicha = async (req, res) => {
+    const { ID_RECETA } = req.params;
+
+    try {
+        const result = await receta.deleteRecetaByFicha(ID_RECETA);
+        res.json({ message: 'Receta eliminada correctamente' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Error al eliminar la receta' });
+    }
+};
+
+
 export {
     getRecetaByFicha,
-    createRecetaFicha
+    createRecetaFicha,
+    deleteRecetaByFicha
 }

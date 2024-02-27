@@ -48,4 +48,22 @@ export class Receta {
             console.log(error);
         }
     }
+
+    async deleteRecetaByFicha(ID_RECETA) {
+        try {
+            const result = await this.sequelize.query(`
+            DELETE FROM Recetas
+            WHERE ID_RECETA = ?;
+          `,
+                {
+                    replacements: [ID_RECETA],
+                    type: this.sequelize.QueryTypes.DELETE
+                });
+            return result;
+        } catch (error) {
+            console.log(error);
+            throw new Error('Error al eliminar la receta');
+        }
+    }
+
 }
