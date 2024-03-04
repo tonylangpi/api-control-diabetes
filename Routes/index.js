@@ -5,7 +5,7 @@ import tiposdiabetes from './tiposdiabetes.route.js';
 import medicamento from './medicamento.route.js';
 import expedientes from './expedientes.route.js'
 import Receta from './receta.route.js'
-
+import FichaMedica from './fichamedica.route.js'
 
 const router = Router();
 
@@ -15,5 +15,6 @@ router.use('/tiposdiabetes',tiposdiabetes);
 router.use('/medicamento',medicamento);
 router.use('/expedientes',expedientes);
 router.use('/receta',Receta);
+router.use('/fichamedica',FichaMedica);
 
 export default router; 
