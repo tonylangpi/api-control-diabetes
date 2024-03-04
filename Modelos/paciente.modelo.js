@@ -6,7 +6,7 @@ export class Paciente {
     }
     async getPacientes(){
         try {
-            const result = await this.sequelize.query('SELECT * FROM Pacientes');
+            const result = await this.sequelize.query('SELECT * FROM Pacientes ORDER BY Id_Paciente desc');
             return result
         } catch (error) {
             console.log(error);
