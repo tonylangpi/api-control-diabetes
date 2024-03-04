@@ -15,7 +15,8 @@ export class Receta {
         FROM Recetas RE  
         INNER JOIN Ficha_Medicas FM on RE.ID_FICHA = FM.Id_Ficha
         INNER JOIN Medicamentos ME on ME.Id_Medicamento = RE.ID_MEDICAMENTO
-        WHERE FM.Id_Ficha = ?;
+        WHERE FM.Id_Ficha = ?
+        ORDER BY RE.ID_RECETA DESC;
             `,
                 {
                     replacements: [ID_RECETA],

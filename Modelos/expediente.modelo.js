@@ -23,6 +23,7 @@ export class Expediente {
             INNER JOIN Usuarios usu on FM.Id_usuario = usu.Id_Usuario
             INNER JOIN Tipo_Diabetes td  on td.ID_Diabetes = FM.Id_Diabetes
             WHERE Id_Paciente = ?
+            ORDER BY FM.Id_Ficha DESC;
             `,
             {
                 replacements: [idPaciente],
