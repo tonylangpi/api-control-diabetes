@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
@@ -16,7 +16,10 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.4",
     "express": "^4.18.2",
+    "fs": "^0.0.1-security",
     "morgan": "^1.10.0",
+    "pdfkit": "^0.14.0",
+    "pdfmake": "^0.2.9",
     "sequelize": "^6.37.0",
     "tedious": "^16.7.0"
   },
