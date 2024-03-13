@@ -65,10 +65,24 @@ const updateUser = async(req, res) => {
     }
 }
 
+const updatePassword = async(req, res) => {
+    const {Id_Usuario} = req.params;
+    const data = req.body;
+    try {
+        const result = await usuario.UpdatePassword(Id_Usuario, data);
+        res.json({message: "Contraseña actualizada con éxito"});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+
+}
+
 export {
     getUsers,
     createUsers,
     inactivateUser,
     updateUser,
-    UsuarioByID
+    UsuarioByID,
+    updatePassword
 }

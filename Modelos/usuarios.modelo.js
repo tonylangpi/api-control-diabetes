@@ -72,9 +72,16 @@ export class Usuario {
     return usuarioFound;
 }
   async UpdateDataUsers(idUsuario, data) {
-     const result = await sequelize.query('UPDATE Usuarios SET Nombres = ?, Apellidos = ?, Correo = ? WHERE ID_Usuario = ?', {
-          replacements: [data.Nombres, data.apellidos, data.Correo, idUsuario]
-      });
-    return result;
+    const result = await sequelize.query('UPDATE Usuarios SET Nombres = ?, Apellidos = ?, Correo = ? WHERE ID_Usuario = ?', {
+      replacements: [data.Nombres, data.apellidos, data.Correo, idUsuario]
+    });
+   return result;
+  }
+  async UpdatePassword(idUsuario, data) {
+    const passwordHash = await bcrypt.hash(data.Contrasena, 10);
+    const result = await sequelize.query('UPDATE Usuarios SET Contrasena = ? WHERE ID_Usuario = ?', {
+      replacements: [passwordHash, idUsuario]
+    });
+   return result;
   }
 }
