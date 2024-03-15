@@ -13,6 +13,18 @@ const createNivelazucar= async(req, res) => {
     }
 };
 
+
+const getNivelazucar = async(req, res) => {
+    try {
+        const result = await nivel_azucar.getNivelAzucar();
+        res.json(result[0]);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 export {
     createNivelazucar,
+    getNivelazucar
 }
+
