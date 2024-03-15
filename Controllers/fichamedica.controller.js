@@ -37,6 +37,8 @@ const getdescarga = async (req, res) => {
           doc.text(`Tiempo de Tratamiento: ${fila.Tiempo_tratamiento}`);
           doc.text(`Recomendaciones: ${fila.Recomendaciones}`);
           doc.text(`Estado: ${fila.Estado}`);
+          doc.text(`Receta: ${fila.Instruccion}`);
+          doc.text(`Medicamento: ${fila.Medicamento}`);
           doc.text('***************************************************************************************');
         });
   

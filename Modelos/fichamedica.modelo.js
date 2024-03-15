@@ -16,9 +16,11 @@ export class Ficha {
     async getFichasPorIdPaciente(idPaciente) {
         try {
             const result = await this.sequelize.query(`
-            SELECT F.*, P.Nombres, P.Apellidos, P.DPI
+            SELECT DISTINCT F.*, P.Nombres, P.Apellidos, P.DPI, R.Instruccion, M.Descripcion AS Medicamento
             FROM Ficha_Medicas F
-            INNER JOIN Pacientes P ON F.Id_Paciente = P.Id_Paciente
+            INNER JOIN Pacientes P ON F.Id_Paciente = P.Id_Paciente 
+            INNER JOIN Recetas R ON F.Id_Diabetes = R.ID_FICHA
+            INNER JOIN Medicamentos M ON M.Id_Medicamento = R.ID_MEDICAMENTO
             WHERE F.Id_Paciente = ?
             ORDER BY F.Fecha DESC;
             `,
