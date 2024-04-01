@@ -7,6 +7,7 @@ import expedientes from './expedientes.route.js'
 import Receta from './receta.route.js'
 import FichaMedica from './fichamedica.route.js'
 import Nivel_Azucar from './nivel_azucar.route.js'
+import chatbot from './chatbot.route.js'
 
 const router = Router();
 
@@ -18,5 +19,6 @@ router.use('/expedientes',expedientes);
 router.use('/receta',Receta);
 router.use('/fichamedica',FichaMedica);
 router.use('/nivel_azucar',Nivel_Azucar);
+router.use('/chatbot', chatbot)
 
 export default router; 
