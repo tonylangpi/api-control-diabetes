@@ -1,5 +1,5 @@
 import {Router} from "express";
-import {getUsers,createUsers,inactivateUser,updateUser,UsuarioByID, updatePassword, correoenvio, verifyCode, saveAccessCode  } from '../Controllers/usuarios.controller.js';
+import {getUsers,createUsers,inactivateUser,updateUser,UsuarioByID, updatePassword, correoenvio, verifyCode, saveAccessCode,Login  } from '../Controllers/usuarios.controller.js';
 
 const router = Router();
 
@@ -13,5 +13,5 @@ router.put('/updatePassword/:Id_Usuario',updatePassword)
 router.post('/correoenviado', correoenvio);
 router.post('/save-access-code', saveAccessCode);
 router.post('/verify', verifyCode);
-
+router.post('/login/:email', Login);
 export default router;

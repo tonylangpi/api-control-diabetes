@@ -103,17 +103,14 @@ const correoenvio = async (req, res) => {
 const verifyCode = async (req, res) => {
     try {
         const { code } = req.body;
-        const isValid = await usuario.verifyCode1(code);
-        console.log(code);
-        if (isValid) {
-          return res.status(200).json({ success: true, message: 'Código válido' });
-        } else {
-          return res.status(400).json({ success: false, message: 'Código inválido' });
-        }
-      } catch (error) {
-        console.error('Error al verificar el código:', error);
-        return res.status(500).json({ success: false, message: 'Error al verificar el código' });
-      }
+        const codeverify = await usuario.verifyCode1(code);
+        console.log("Esto es de verificador: ",codeverify)
+        res.json(codeverify)
+
+    } catch (error) {
+        console.error('Error ', error);
+
+    }
     };
 
  const saveAccessCode = async (req, res) => {
@@ -127,6 +124,19 @@ const verifyCode = async (req, res) => {
     }
   };
 
+const Login = async (req, res) => {
+    try {
+        const { email } = req.params;
+        const {pass} = req.body;
+        const userfound = await usuario.login(email, pass);
+        res.json({ ok: true, info: userfound })
+
+    } catch (error) {
+        console.error('Error ', error);
+
+    }
+  };
+
 export {
     getUsers,
     createUsers,
@@ -136,5 +146,6 @@ export {
     updatePassword,
     correoenvio,
     saveAccessCode,
-    verifyCode 
+    verifyCode, 
+    Login
 }

@@ -106,11 +106,36 @@ async verifyCode1 (code) {
       replacements: [code],
       type: sequelize.QueryTypes.SELECT,
     });
-    return result.length > 0
+    console.log(result)
+    return result
   } catch (error) {
     console.error('Error al verificar el código:', error);
     throw new Error('Error al verificar el código');
   }
 };
+
+  async login(email, pass) {
+    const result = await sequelize.query(`SELECT usu.ID_Usuario, usu.Nombres, usu.Apellidos, usu.Correo, usu.Contrasena, r.Descripcion, usu.Estado FROM Usuarios usu 
+  INNER JOIN Roles r ON r.Id_Rol = usu.Rol
+  WHERE usu.Correo = ?`, {
+      type: sequelize.QueryTypes.SELECT,
+      replacements: [email]
+    });   
+    const usuarioEncontrado = result[0];
+    if (!usuarioEncontrado) {
+        console.log("Usuario no encontrado");
+        return null; // Cambiado para devolver null en caso de que el usuario no sea encontrado
+    }
+    console.log(usuarioEncontrado);
+    console.log(pass);
+    const passwordMatch = await bcrypt.compare(pass, usuarioEncontrado.Contrasena);  
+    if (!passwordMatch) {
+        console.log("Contraseña incorrecta");
+        return null; // Cambiado para devolver null en caso de que la contraseña no coincida
+    } 
+    console.log("Usuario autenticado correctamente");
+    return usuarioEncontrado;
+}
+
 
 }
