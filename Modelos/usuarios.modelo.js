@@ -77,6 +77,7 @@ export class Usuario {
     });
    return result;
   }
+
   async UpdatePassword(idUsuario, data) {
     const passwordHash = await bcrypt.hash(data.Contrasena, 10);
     const result = await sequelize.query('UPDATE Usuarios SET Contrasena = ? WHERE ID_Usuario = ?', {
@@ -84,4 +85,32 @@ export class Usuario {
     });
    return result;
   }
+
+
+async guardarCodigoAcceso(email, code) {
+  try {
+    const result =await sequelize.query('UPDATE Usuarios SET Acceso = ? WHERE Correo = ?', {
+      replacements: [code, email],
+      type: sequelize.QueryTypes.UPDATE
+    });
+    return result;
+  } catch (error) {
+    console.error('Error al guardar el código de acceso en la tabla de usuarios:', error);
+    throw new Error('Error al guardar el código de acceso en la tabla de usuarios');
+  }
+};
+
+async verifyCode1 (code) {
+  try {
+    const result = await sequelize.query(`SELECT * FROM Usuarios WHERE Acceso = ?`, {
+      replacements: [code],
+      type: sequelize.QueryTypes.SELECT,
+    });
+    return result.length > 0
+  } catch (error) {
+    console.error('Error al verificar el código:', error);
+    throw new Error('Error al verificar el código');
+  }
+};
+
 }
